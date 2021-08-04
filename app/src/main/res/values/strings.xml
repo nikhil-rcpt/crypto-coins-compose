@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">Coins</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="coin_image_for">Coin image for %s</string>
+    <string name="mcap">MCap</string>
+    <string name="inr">INR</string>
+    <string name="sort_by_rank">Sort by Rank</string>
+    <string name="top_100">Top 100</string>
+    <string name="all">All</string>
+    <string name="cryptocurrencies">Cryptocurrencies</string>
+    <string name="blank">""</string>
+    <string name="change_one_week">"%(7d)"</string>
+    <string name="change_one_day">"%(1d)"</string>
+    <string name="change_one_hour">"%(24h)"</string>
+    <string name="home_route">Home</string>
+    <string name="listing_route">Listing</string>
+    <string name="dashboard_route">Dashboard</string>
+    <string name="discover_route">Discover</string>
+    <string name="settings_route">Settings</string>
+    <string name="crypto_assets">Cryptoassets</string>
+    <string name="exchanges">Exchanges</string>
+    <string name="sectors">Sectors</string>
+    <string name="price_alert">Price Alerts</string>
+    <string name="convert">Convert</string>
+    <string name="compare">Compare</string>
+    <string name="watchlist">Watchlist</string>
+    <string name="home">Home</string>
+    <string name="top_coins">Top Coins</string>
+    <string name="gainers_n_losers"><![CDATA[Gainers & Losers]]></string>
+    <string name="see_all">See All</string>
+    <string name="latest_news">Latest News</string>
+    <string name="blog">Blog</string>
+    <string name="top_gainers">Top Gainers</string>
+    <string name="top_losers">Top Losers</string>
+    <string name="trending">Trending</string>
+    <string name="popular_and_breaking_news"><![CDATA[Popular & Breaking News]]></string>
+    <string name="bitcoin">Bitcoin</string>
+    <string name="based_on_your_portfolio">Based on your portfolio</string>
+    <string name="ethereum">Ethereum</string>
+
+</resources>
