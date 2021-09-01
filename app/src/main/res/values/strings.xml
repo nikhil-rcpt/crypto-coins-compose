@@ -45,5 +45,15 @@
     <string name="bitcoin">Bitcoin</string>
     <string name="based_on_your_portfolio">Based on your portfolio</string>
     <string name="ethereum">Ethereum</string>
+    <string name="current_balance">Current Balance</string>
+    <string name="line_chart">Line Chart</string>
+    <string name="pie_chart">Pie Chart</string>
+    <string name="statistics">Statistics</string>
+    <string name="_24h">24h</string>
+    <string name="_7d">7d</string>
+    <string name="_30d">30d</string>
+    <string name="_60d">60d</string>
+    <string name="_90d">90d</string>
+    <string name="your_asset">Your  Asset</string>
 
 </resources>

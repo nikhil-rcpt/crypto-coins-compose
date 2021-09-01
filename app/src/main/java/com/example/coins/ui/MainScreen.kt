@@ -118,7 +118,7 @@ private fun MainScreenNavigationConfigurations(
             ListingScreen("list", vm)
         }
         composable(BottomNavigationScreens.Dashboard.route) {
-//            DashboardScreen("dashboard",dashboardVm)
+            DashboardScreen("dashboard",dashboardVm)
         }
         composable(BottomNavigationScreens.Discover.route) {
             DiscoverScreen("discover", discoverVm)

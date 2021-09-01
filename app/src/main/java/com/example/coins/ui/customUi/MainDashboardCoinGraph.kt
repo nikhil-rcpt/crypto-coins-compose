@@ -1,5 +1,6 @@
 package com.example.coins.ui.customUi
 
+import android.graphics.Paint
 import android.graphics.PointF
 import android.util.Log
 import androidx.compose.foundation.Canvas
@@ -8,13 +9,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
 import com.example.coins.R
 
+private const val GRAPH_GUIDE_COUNT = 3
 private fun getMinMaxMg(data: List<Int>) : Pair<Int,Int>{
     if(data.isEmpty())  return Pair(0,0)
     var min = data.first()
@@ -26,12 +28,11 @@ private fun getMinMaxMg(data: List<Int>) : Pair<Int,Int>{
     return Pair(min,max)
 }
 
-private fun createPointsMg(data: List<Int>, size: Size?): List<PointF> {
+private fun createPointsMg(data: List<Int>, size: Size?,minMax: Pair<Int, Int>): List<PointF> {
     size ?: return listOf()
     val widthBetweenEachPoint = (size.width / (data.size-1))
     val boxHeight = size.height
     val pointsO = mutableListOf<PointF>()
-    val minMax = getMinMaxMg(data)
     val maxData = minMax.second
     val minData = minMax.first
     val adjustedMax = maxData-minData
@@ -69,19 +70,25 @@ private fun calculateConnectionPointsForBezierCurveMg(points : List<PointF>): Tr
 fun MainDashboardCoinGraph(dataSet : List<Int> = listOf(10,11,15,9,10,12),styleThin:Boolean = false) {
     //todo take properties in composable
     val colorPathBorderGain =  colorResource(R.color.graph_gain)
+    val colorGraphGuide =  colorResource(R.color.graph_guide)
     val colorPathBorderGainGradient =  colorResource(R.color.graph_gain_gradient)
     val colorPathBorderLossGradient =  colorResource(R.color.graph_loss_gradient)
     val colorPathBorderLoss =  colorResource(R.color.graph_loss)
     val isGain by remember { mutableStateOf(isGainMg(dataSet)) }
+    val graphGuideTextPaintSize =  dimensionResource(R.dimen.graph_guide_text_size).value
+    val graphGuideTextPaint by remember { mutableStateOf(Paint().also { it.textSize = graphGuideTextPaintSize}) }
+    val minMax by remember { mutableStateOf(getMinMaxMg(dataSet)) }
     val colorPathBorder by remember { mutableStateOf(  if(isGain)colorPathBorderGain else colorPathBorderLoss    ) }
     val colorPathBorderGradient by remember { mutableStateOf(  if(isGain)colorPathBorderGainGradient else colorPathBorderLossGradient    ) }
     val colorWhite = colorResource(id = R.color.white)
     var size by remember { mutableStateOf<Size?>(null) }
-    var points by remember { mutableStateOf(createPointsMg(dataSet,size)  ) }
+    var points by remember { mutableStateOf(createPointsMg(dataSet,size,minMax)  ) }
     var data by remember { mutableStateOf( calculateConnectionPointsForBezierCurveMg(points)) }
     var finalData by remember { mutableStateOf(drawBezierCurveMg(data.first,data.second,data.third,size)) }
+    var graphGuideLines by remember { mutableStateOf(getGraphGuideLines(size,minMax)) }
     val strokeWidth by remember { mutableStateOf(if(styleThin) 4f else 5F )}
     Canvas(modifier= Modifier.fillMaxSize()){
+
         Log.i("graph : ondraw ","here size=$size ${this.size}")
 
 //        for(i in 0..5){
@@ -90,20 +97,42 @@ fun MainDashboardCoinGraph(dataSet : List<Int> = listOf(10,11,15,9,10,12),styleT
         if(size!=null) {
             drawPath(finalData.first, Brush.verticalGradient(listOf(colorPathBorderGradient, colorWhite)))
             drawPath(finalData.second, colorPathBorder, style = Stroke(width = strokeWidth))
+
+            graphGuideLines.forEach {
+                drawLine(colorGraphGuide, Offset(0f,it.value.toFloat()), Offset(size?.width!!,it.value.toFloat()))
+            }
+            drawIntoCanvas {canvas->
+                graphGuideLines.forEach {
+                    canvas.nativeCanvas.drawText("\u20B9 ${it.key}",16f,it.value.toFloat()+graphGuideTextPaintSize, graphGuideTextPaint)
+                }
+            }
         }
+
         if(size!=this.size) {
             size=this.size
-            points=createPointsMg(dataSet,size);
+            points=createPointsMg(dataSet,size,minMax);
             data=calculateConnectionPointsForBezierCurveMg(points)
             finalData=drawBezierCurveMg(data.first,data.second,data.third,size)
+            graphGuideLines= getGraphGuideLines(size,minMax)
         }
     }
 }
 
-
-private fun drawlines(){
+fun getGraphGuideLines(size: Size?, minMax: Pair<Int, Int>): Map<Int,Int> {
+    size ?: return hashMapOf()
+    val divHeight =  size.height/ GRAPH_GUIDE_COUNT
+    val heightValue = (minMax.second-minMax.first).toFloat()/ (GRAPH_GUIDE_COUNT).toFloat()
+    val map= mutableMapOf<Int,Int>()
+    for (i in GRAPH_GUIDE_COUNT downTo 0){
+        //key : graph line value from dataset, value : graph line height relative to key
+        map[(minMax.first+(i*heightValue)).toInt()]=(GRAPH_GUIDE_COUNT-i)*divHeight.toInt()
+    }
+    return map.toMap()
 
 }
+
+
+
 private fun drawBezierCurveMg(points : List<PointF>, conPoint1 : List<PointF>
                             , conPoint2 :List<PointF>, size : Size?): Pair<Path, Path> {
 

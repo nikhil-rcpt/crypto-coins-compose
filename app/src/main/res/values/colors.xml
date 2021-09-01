@@ -12,7 +12,9 @@
 
     <color name="gain">#79ea86</color>
     <color name="graph_gain">#24d895</color>
+    <color name="graph_guide">#C6C6C6</color>
     <color name="graph_gain_gradient">#8024D895</color>
+    <color name="gain_ticker_bg">#4D24D895</color>
     <color name="loss">#e75757</color>
     <color name="graph_loss">#ec8087</color>
     <color name="graph_loss_gradient">#80EC8087</color>

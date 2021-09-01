@@ -69,12 +69,6 @@ fun HomeScreen(name: String, vm: HomeScreenViewModel) {
     ) {
 
 
-//        Image(
-//            painter = painterResource(id = R.drawable.coin_banner),
-//            contentDescription = "",
-//            modifier = Modifier.height(900.dp), contentScale = ContentScale.Crop
-//        )
-
         Box(
             modifier = Modifier
                 .background(colorResource(id = R.color.black))
@@ -112,39 +106,20 @@ fun HomeScreen(name: String, vm: HomeScreenViewModel) {
         LazyColumn(
             state = st
         ) {
-//                            item {
-//            HomeToolbar()
-//        }
-//          st = scrollstate
+
             item {
                 Column(
                     modifier = Modifier
                         .height(mainToolbarHeight)
                         .fillMaxWidth()
-//                       .background(colorResource(id = R.color.loss))
-//
+
                 ) {
                 }
             }
 
-//            stickyHeader {
-//                Column(
-//                    modifier = Modifier
-//                        .height(110.dp)
-//                        .fillMaxWidth()
-//                            .background(colorResource(id = R.color.loss)
-////
-//                ) ){
-//                }
-//            }
-//
-//                    item{
-//                        Spacer(modifier =Modifier.height(100.dp))
-//                    }
 
             item {
 
-//                        Spacer(modifier =Modifier.height(32.dp))
                 Column(
                     modifier = Modifier
                         .background(
@@ -198,17 +173,9 @@ fun HomeToolbar(
             "${scrollState.firstVisibleItemIndex}  ${scrollState.firstVisibleItemScrollOffset}   "
         )
 
-        Box() {
-//                Text(
-//                    modifier = Modifier
-//                        .padding(16.dp, 28.dp)
-//,                    text = stringResource(id = R.string.home),
-//                    style = MaterialTheme.typography.body2
-//                )
+        Box {
 
-//                var ty by remember { mutableStateOf(-140f) }
             val mainOffset = -(mainToolbarHeight.value + (statusBarHeight.toFloat()))
-//                var mainOffset = -160f
             var ty by remember {
                 mutableStateOf(-mainOffset)
             }
@@ -237,15 +204,7 @@ fun HomeToolbar(
                     .height(80.dp)
                     .background(colorResource(id = R.color.white))
             ) {
-//                    Spacer(modifier = Modifier
-//                        .graphicsLayer {
-////                        alpha = min(1f, 1 - (scrollState.value / 600f))
-//                            translationY = ty
-//                        }
-//                        .fillMaxWidth()
-//                        .height(80.dp)
-//                        .background(colorResource(id = R.color.white))
-//                    )
+
 
                 Text(
                     modifier = Modifier

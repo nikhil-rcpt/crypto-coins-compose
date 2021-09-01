@@ -14,6 +14,7 @@ import javax.inject.Inject
 public class DashboardViewModel @Inject constructor(private val coinUseCase: CoinUseCase1) :
     BaseViewModel<DashboardViewState>(DashboardViewState()) {
 
+
     init {
         viewModelScope.launch {
             this.launchSetState { copy(progress = true) }
@@ -23,5 +24,20 @@ public class DashboardViewModel @Inject constructor(private val coinUseCase: Coi
         }
     }
 
+    fun onGraphOptionSelection(it: GraphCategory) {
+        viewModelScope.launchSetState {
+            copy(selectedGraphOption = it)
+        }
+    }
+    fun onGraphRangeOptionSelection(it: GraphRange) {
+        viewModelScope.launchSetState {
+            copy(selectedGraphRangeOption = it)
+        }
+    }
 
+    fun setSelectedAssetView(it : AssetView) {
+       viewModelScope.launchSetState {
+           copy(assetView = it)
+       }
+    }
 }
